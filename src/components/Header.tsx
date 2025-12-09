@@ -77,6 +77,32 @@ function MoonIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   )
 }
 
+function LocationWidget() {
+  const [time, setTime] = useState('')
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date()
+      setTime(now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Taipei' }))
+    }
+    updateTime()
+    const interval = setInterval(updateTime, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="hidden lg:flex flex-col items-end justify-center h-full text-[10px] font-mono leading-tight text-zinc-400 dark:text-zinc-500 select-none">
+      <div className="flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
+        <span>TAIPEI, TW</span>
+      </div>
+      <div>
+        {time || '00:00'} CST
+      </div>
+    </div>
+  )
+}
+
 function MobileNavItem({
   href,
   children,
@@ -98,8 +124,8 @@ function MobileNavigation(
 ) {
   return (
     <Popover {...props}>
-      <PopoverButton className="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20">
-        選單
+      <PopoverButton className="group flex items-center bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 ring-1 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20">
+        MENU
         <ChevronDownIcon className="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400" />
       </PopoverButton>
       <PopoverBackdrop
@@ -109,23 +135,23 @@ function MobileNavigation(
       <PopoverPanel
         focus
         transition
-        className="fixed inset-x-4 top-8 z-50 origin-top rounded-3xl bg-white p-8 ring-1 ring-zinc-900/5 duration-150 data-closed:scale-95 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in dark:bg-zinc-900 dark:ring-zinc-800"
+        className="fixed inset-x-4 top-8 z-50 origin-top bg-white p-8 ring-1 ring-zinc-900/5 duration-150 data-closed:scale-95 data-closed:opacity-0 data-enter:ease-out data-leave:ease-in dark:bg-zinc-900 dark:ring-zinc-800"
       >
         <div className="flex flex-row-reverse items-center justify-between">
           <PopoverButton aria-label="Close menu" className="-m-1 p-1">
             <CloseIcon className="h-6 w-6 text-zinc-500 dark:text-zinc-400" />
           </PopoverButton>
-          <h2 className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-            導航
+          <h2 className="text-sm font-medium text-zinc-600 dark:text-zinc-400 font-mono uppercase tracking-widest">
+            Navigation
           </h2>
         </div>
         <nav className="mt-6">
-          <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
-            <MobileNavItem href="/about">關於</MobileNavItem>
-            <MobileNavItem href="/articles">文章</MobileNavItem>
-            <MobileNavItem href="/projects">專案</MobileNavItem>
-            <MobileNavItem href="/speaking">成就</MobileNavItem>
-            <MobileNavItem href="/uses">工具</MobileNavItem>
+          <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300 font-mono uppercase tracking-widest">
+            <MobileNavItem href="/about">About</MobileNavItem>
+            <MobileNavItem href="/articles">Articles</MobileNavItem>
+            <MobileNavItem href="/projects">Projects</MobileNavItem>
+            <MobileNavItem href="/speaking">Speaking</MobileNavItem>
+            <MobileNavItem href="/uses">Uses</MobileNavItem>
           </ul>
         </nav>
       </PopoverPanel>
@@ -147,7 +173,7 @@ function NavItem({
       <Link
         href={href}
         className={clsx(
-          'relative block px-3 py-2 transition',
+          'relative block px-3 py-2 transition uppercase tracking-widest text-xs font-bold font-mono',
           isActive
             ? 'text-teal-500 dark:text-teal-400'
             : 'hover:text-teal-500 dark:hover:text-teal-400',
@@ -155,7 +181,7 @@ function NavItem({
       >
         {children}
         {isActive && (
-          <span className="absolute inset-x-1 -bottom-px h-px bg-linear-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0 dark:from-teal-400/0 dark:via-teal-400/40 dark:to-teal-400/0" />
+          <span className="absolute inset-x-1 -bottom-px h-px bg-teal-500 dark:bg-teal-400" />
         )}
       </Link>
     </li>
@@ -165,12 +191,12 @@ function NavItem({
 function DesktopNavigation(props: React.ComponentPropsWithoutRef<'nav'>) {
   return (
     <nav {...props}>
-      <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
-        <NavItem href="/about">關於</NavItem>
-        <NavItem href="/articles">文章</NavItem>
-        <NavItem href="/projects">專案</NavItem>
-        <NavItem href="/speaking">成就</NavItem>
-        <NavItem href="/uses">工具</NavItem>
+      <ul className="flex bg-white/80 px-4 py-1 text-sm font-medium text-zinc-800 backdrop-blur-md dark:bg-zinc-800/80 dark:text-zinc-200 ring-1 ring-zinc-900/5 dark:ring-white/10 rounded-full shadow-lg shadow-zinc-800/5">
+        <NavItem href="/about">About</NavItem>
+        <NavItem href="/articles">Articles</NavItem>
+        <NavItem href="/projects">Projects</NavItem>
+        <NavItem href="/speaking">Speaking</NavItem>
+        <NavItem href="/uses">Lab</NavItem>
       </ul>
     </nav>
   )
@@ -189,11 +215,11 @@ function ThemeToggle() {
     <button
       type="button"
       aria-label={mounted ? `Switch to ${otherTheme} theme` : 'Toggle theme'}
-      className="group rounded-full bg-white/90 px-3 py-2 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm transition dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20"
+      className="group rounded-full bg-white/90 px-3 py-2 backdrop-blur-sm transition dark:bg-zinc-800/90 ring-1 ring-zinc-900/5 dark:ring-white/10 hover:ring-zinc-900/20 dark:hover:ring-white/20"
       onClick={() => setTheme(otherTheme)}
     >
-      <SunIcon className="h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
-      <MoonIcon className="hidden h-6 w-6 fill-zinc-700 stroke-zinc-500 transition not-[@media_(prefers-color-scheme:dark)]:fill-teal-400/10 not-[@media_(prefers-color-scheme:dark)]:stroke-teal-500 dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400" />
+      <SunIcon className="h-6 w-6 stroke-zinc-900 transition dark:hidden dark:stroke-white" />
+      <MoonIcon className="hidden h-6 w-6 stroke-zinc-900 transition dark:block dark:stroke-white" />
     </button>
   )
 }
@@ -212,7 +238,7 @@ function AvatarContainer({
     <div
       className={clsx(
         className,
-        'h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-800/90 dark:ring-white/10',
+        'h-10 w-10 rounded-full bg-white/90 p-0.5 backdrop-blur-sm dark:bg-zinc-800/90 ring-1 ring-zinc-900/5 dark:ring-white/10',
       )}
       {...props}
     />
@@ -416,7 +442,7 @@ export function Header() {
                 'var(--header-inner-position)' as React.CSSProperties['position'],
             }}
           >
-            <div className="relative flex gap-4">
+            <div className="relative flex gap-4 items-center">
               <div className="flex flex-1">
                 {!isHomePage && (
                   <AvatarContainer>
@@ -428,7 +454,8 @@ export function Header() {
                 <MobileNavigation className="pointer-events-auto md:hidden" />
                 <DesktopNavigation className="pointer-events-auto hidden md:block" />
               </div>
-              <div className="flex justify-end md:flex-1">
+              <div className="flex justify-end md:flex-1 items-center gap-4">
+                <LocationWidget />
                 <div className="pointer-events-auto">
                   <ThemeToggle />
                 </div>

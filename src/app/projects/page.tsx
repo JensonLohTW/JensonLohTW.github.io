@@ -1,8 +1,12 @@
 import { type Metadata } from 'next'
 import Image from 'next/image'
+import clsx from 'clsx'
 
 import { Card } from '@/components/Card'
-import { SimpleLayout } from '@/components/SimpleLayout'
+import { Container } from '@/components/Container'
+import { SwissGrid, SwissGridItem } from '@/components/SwissGrid'
+import { SectionLine, SwissLabel, Crosshair, PlusGridItem } from '@/components/GeometricDecor'
+import { FadeIn, FadeInStagger } from '@/components/FadeIn'
 import logoXiaohongshu from '@/images/logos/xiaohongshu-project.svg'
 import logoXimalaya from '@/images/logos/ximalaya-project.svg'
 import logoOfficeStar from '@/images/logos/officestar-project.svg'
@@ -12,85 +16,135 @@ const projects = [
     name: '小紅書數據中台',
     description:
       '主導建構 User–Content–Data 全鏈路追蹤體系，制定社交分享增長策略。實現分享觸達率提升 45%、新客轉化率提升 20%、分享成功率提升至失敗率 < 2%。',
-    link: { href: '#', label: '產品成果' },
+    link: { href: '#', label: 'View Case Study' },
     logo: logoXiaohongshu,
-    metrics: ['觸達率 +45%', '轉化率 +20%', '失敗率 <2%'],
+    metrics: ['Reach +45%', 'Conv. +20%', 'Fail Rate <2%'],
+    featured: true,
   },
   {
     name: '喜馬拉雅商業化模組',
     description:
-      '從 0 到 1 建構商業化體系，涵蓋會員訂閱、內容付費、原生廣告三大模組。設計限時付費、內容試聽等付費轉化功能，建立需求池管理與敏捷開發流程。',
-    link: { href: '#', label: '產品成果' },
+      '從 0 到 1 建構商業化體系，涵蓋會員訂閱、內容付費、原生廣告三大模組。設計限時付費、內容試聽等付費轉化功能。',
+    link: { href: '#', label: 'View Project' },
     logo: logoXimalaya,
-    metrics: ['轉化率 +25%', '留存率 +15%', 'CTR +27%'],
+    metrics: ['Conv. +25%', 'Retention +15%', 'CTR +27%'],
+    featured: false,
   },
   {
     name: 'Office Star 數位化專案',
     description:
-      '主導服飾集團數位轉型，開發 Python + Selenium 自動化標案爬蟲、Spring Boot + Vue 電商平台與 ERP 系統。打通跨部門數據 Pipeline，上線 5+ 業務模組。',
-    link: { href: '#', label: '產品成果' },
+      '主導服飾集團數位轉型，開發 Python + Selenium 自動化標案爬蟲、Spring Boot + Vue 電商平台與 ERP 系統。',
+    link: { href: '#', label: 'View Project' },
     logo: logoOfficeStar,
-    metrics: ['100% 自動化', '效率 +40%', '5+ 模組'],
+    metrics: ['100% Automated', 'Eff. +40%', '5+ Modules'],
+    featured: false,
   },
 ]
 
-function LinkIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-      <path
-        d="M15.712 11.823a.75.75 0 1 0 1.06 1.06l-1.06-1.06Zm-4.95 1.768a.75.75 0 0 0 1.06-1.06l-1.06 1.06Zm-2.475-1.414a.75.75 0 1 0-1.06-1.06l1.06 1.06Zm4.95-1.768a.75.75 0 1 0-1.06 1.06l1.06-1.06Zm3.359.53-.884.884 1.06 1.06.885-.883-1.061-1.06Zm-4.95-2.12 1.414-1.415L12 6.344l-1.415 1.413 1.061 1.061Zm0 3.535a2.5 2.5 0 0 1 0-3.536l-1.06-1.06a4 4 0 0 0 0 5.656l1.06-1.06Zm4.95-4.95a2.5 2.5 0 0 1 0 3.535L17.656 12a4 4 0 0 0 0-5.657l-1.06 1.06Zm1.06-1.06a4 4 0 0 0-5.656 0l1.06 1.06a2.5 2.5 0 0 1 3.536 0l1.06-1.06Zm-7.07 7.07.176.177 1.06-1.06-.176-.177-1.06 1.06Zm-3.183-.353.884-.884-1.06-1.06-.884.883 1.06 1.06Zm4.95 2.121-1.414 1.414 1.06 1.06 1.415-1.413-1.06-1.061Zm0-3.536a2.5 2.5 0 0 1 0 3.536l1.06 1.06a4 4 0 0 0 0-5.656l-1.06 1.06Zm-4.95 4.95a2.5 2.5 0 0 1 0-3.535L6.344 12a4 4 0 0 0 0 5.656l1.06-1.06Zm-1.06 1.06a4 4 0 0 0 5.657 0l-1.061-1.06a2.5 2.5 0 0 1-3.535 0l-1.061 1.06Zm7.07-7.07-.176-.177-1.06 1.06.176.178 1.06-1.061Z"
-        fill="currentColor"
-      />
-    </svg>
-  )
+export const metadata: Metadata = {
+  title: 'Projects',
+  description: 'Selected work & case studies.',
 }
 
-export const metadata: Metadata = {
-  title: '專案',
-  description: '我主導的產品專案，用數據驅動增長的實踐案例。',
+function ProjectCard({ project }: { project: typeof projects[0] }) {
+  return (
+    <div className={clsx(
+      "group relative h-full flex flex-col p-8 transition-all duration-500",
+      "hover:bg-zinc-50 dark:hover:bg-zinc-800/50",
+      "border border-zinc-200 dark:border-zinc-800"
+    )}>
+      {/* Geometric Accents */}
+      <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-zinc-300 dark:border-zinc-700 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-zinc-300 dark:border-zinc-700 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-zinc-300 dark:border-zinc-700 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-zinc-300 dark:border-zinc-700 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+      <div className="mb-8 flex items-center justify-between">
+        <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-none bg-zinc-100 dark:bg-zinc-800 ring-1 ring-zinc-900/5 dark:ring-zinc-700/50">
+          <Image
+            src={project.logo}
+            alt=""
+            className="h-8 w-8 grayscale group-hover:grayscale-0 transition-all duration-500"
+            unoptimized
+          />
+        </div>
+        {project.featured && <SwissLabel className="text-teal-500">FEATURED</SwissLabel>}
+      </div>
+
+      <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4 font-display uppercase tracking-tight">
+        <Card.Link href={project.link.href}>
+          <span className="absolute -inset-x-0 -inset-y-0 z-20" />
+          {project.name}
+        </Card.Link>
+      </h2>
+
+      <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-8 flex-grow max-w-lg">
+        {project.description}
+      </p>
+
+      <div className="pt-8 border-t border-zinc-100 dark:border-zinc-800/50 mt-auto">
+        <SwissLabel className="mb-4 block text-xs opacity-50">Key Metrics</SwissLabel>
+        <div className="grid grid-cols-3 gap-4">
+          {project.metrics.map((metric) => (
+            <div key={metric} className="text-xs font-mono font-medium text-teal-600 dark:text-teal-400 uppercase tracking-wider">
+              {metric}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Hover Corner Icon */}
+      <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0">
+        <Crosshair className="w-4 h-4 text-teal-500" />
+      </div>
+    </div>
+  )
 }
 
 export default function Projects() {
   return (
-    <SimpleLayout
-      title="我主導的產品專案"
-      intro="這些是我在產品經理生涯中主導的核心專案。每個專案都是從用戶需求出發，透過數據分析和迭代優化，最終實現顯著的業務增長。"
-    >
-      <ul
-        role="list"
-        className="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3"
-      >
-        {projects.map((project) => (
-          <Card as="li" key={project.name}>
-            <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
-              <Image
-                src={project.logo}
-                alt=""
-                className="h-8 w-8"
-                unoptimized
-              />
+    <Container className="mt-16 sm:mt-32">
+      <div className="mb-24 relative">
+        <PlusGridItem className="absolute -top-12 -right-12 hidden lg:block opacity-20" />
+        <SwissLabel className="mb-8 block">Selected Work</SwissLabel>
+        <h1 className="text-5xl font-bold tracking-tighter text-zinc-900 sm:text-7xl dark:text-zinc-100 font-display max-w-5xl leading-[0.85] uppercase">
+          Data-Driven<br /> <span className="text-teal-500">Product Growth.</span>
+        </h1>
+        <p className="mt-8 text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl border-l-2 border-teal-500 pl-6">
+          A selection of projects where I led the transition from 0 to 1, and optimized from 1 to 100.
+        </p>
+      </div>
+
+      <SectionLine className="mb-16" />
+
+      <FadeInStagger>
+        <SwissGrid columns={12} className="gap-y-8 lg:gap-y-12">
+          {/* Featured Project - Spans 8 Columns */}
+          {projects.filter(p => p.featured).map((project) => (
+            <SwissGridItem key={project.name} colSpan={12} className="col-span-12 lg:col-span-8">
+              <FadeIn className="h-full">
+                <ProjectCard project={project} />
+              </FadeIn>
+            </SwissGridItem>
+          ))}
+
+          {/* Empty space next to featured project for true Swiss asymmetry, or a quote/stat could go here */}
+          <SwissGridItem colSpan={4} className="hidden lg:block col-span-4 relative">
+            <div className="absolute top-0 right-0 w-full h-full border-l border-dashed border-zinc-200 dark:border-zinc-800 p-8 flex items-end justify-end opacity-50">
+              <Crosshair />
             </div>
-            <h2 className="mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
-              <Card.Link href={project.link.href}>{project.name}</Card.Link>
-            </h2>
-            <Card.Description>{project.description}</Card.Description>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {project.metrics.map((metric) => (
-                <span
-                  key={metric}
-                  className="inline-flex items-center rounded-full bg-teal-50 px-2 py-1 text-xs font-medium text-teal-700 ring-1 ring-teal-600/20 ring-inset dark:bg-teal-400/10 dark:text-teal-400 dark:ring-teal-400/20"
-                >
-                  {metric}
-                </span>
-              ))}
-            </div>
-            <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-teal-500 dark:text-zinc-200">
-              <LinkIcon className="h-6 w-6 flex-none" />
-              <span className="ml-2">{project.link.label}</span>
-            </p>
-          </Card>
-        ))}
-      </ul>
-    </SimpleLayout>
+          </SwissGridItem>
+
+          {/* Standard Projects - Span 6 or 4 columns */}
+          {projects.filter(p => !p.featured).map((project) => (
+            <SwissGridItem key={project.name} colSpan={6} className="col-span-12 lg:col-span-6">
+              <FadeIn className="h-full">
+                <ProjectCard project={project} />
+              </FadeIn>
+            </SwissGridItem>
+          ))}
+        </SwissGrid>
+      </FadeInStagger>
+    </Container>
   )
 }

@@ -4,8 +4,16 @@ import Link from 'next/link'
 import clsx from 'clsx'
 
 import { Container } from '@/components/Container'
-import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
+import {
+  GitHubIcon,
+  InstagramIcon,
+  LinkedInIcon,
+  XIcon,
+} from '@/components/SocialIcons'
 import portraitImage from '@/images/portrait.jpg'
+import { SwissGrid, SwissGridItem } from '@/components/SwissGrid'
+import { Crosshair, SectionLine, SwissLabel, GridLines } from '@/components/GeometricDecor'
+import { FadeIn, FadeInStagger } from '@/components/FadeIn'
 
 function SocialLink({
   className,
@@ -15,19 +23,23 @@ function SocialLink({
 }: {
   className?: string
   href: string
-  icon: React.ComponentType<{ className?: string }>
   children: React.ReactNode
+  icon: React.ComponentType<{ className?: string }>
 }) {
   return (
-    <li className={clsx(className, 'flex')}>
-      <Link
-        href={href}
-        className="group flex text-sm font-medium text-zinc-800 transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
-      >
-        <Icon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-teal-500" />
-        <span className="ml-4">{children}</span>
-      </Link>
-    </li>
+    <Link
+      href={href}
+      className={clsx(
+        className,
+        'group flex items-center p-4 transition-all duration-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700'
+      )}
+    >
+      <Icon className="h-5 w-5 flex-none fill-zinc-500 transition group-hover:fill-teal-500" />
+      <span className="ml-4 text-sm font-medium text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 uppercase tracking-wide">
+        {children}
+      </span>
+      <Crosshair className="ml-auto w-3 h-3 text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+    </Link>
   )
 }
 
@@ -43,67 +55,115 @@ function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 }
 
 export const metadata: Metadata = {
-  title: '關於',
+  title: 'About',
   description:
-    '我是羅吉祥（Jenson Loh），一位用數據驅動產品增長的產品經理。',
+    'I’m Jenson Loh. I live in Taipei, where I design the future.',
 }
 
 export default function About() {
   return (
     <Container className="mt-16 sm:mt-32">
-      <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
-        <div className="lg:pl-20">
-          <div className="max-w-xs px-2.5 lg:max-w-none">
-            <Image
-              src={portraitImage}
-              alt=""
-              sizes="(min-width: 1024px) 32rem, 20rem"
-              className="aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
-            />
-          </div>
+
+      {/* Editorial Header */}
+      <div className="mb-16 lg:mb-24 relative">
+        <div className="absolute top-0 right-0 hidden lg:block">
+          <SwissLabel>Est. 1995</SwissLabel>
         </div>
-        <div className="lg:order-first lg:row-span-2">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            我是羅吉祥，一位用數據驅動產品增長的產品經理。
-          </h1>
-          <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
-            <p>
-              我畢業於上海理工大學資訊工程學系，擁有紮實的技術背景。這段學習經歷讓我不僅能夠理解技術實現的複雜性，更能夠在產品設計時充分考慮技術可行性，成為真正能與工程師深度對話的產品經理。
-            </p>
-            <p>
-              我的產品經理之旅始於喜馬拉雅，在那裡我從 0 到 1
-              建構了商業化體系，涵蓋會員訂閱、內容付費和原生廣告三大模組。透過精細的用戶分層和付費轉化漏斗優化，成功將付費轉化率提升
-              25%、用戶留存率提升 15%。
-            </p>
-            <p>
-              之後在小紅書擔任中台產品經理，主導建構 User–Content–Data
-              全鏈路追蹤體系，並制定社交分享增長策略。透過個性化分享卡片、智能推薦語和分享激勵機制，實現分享觸達率提升
-              45%、新客轉化率提升 20%。
-            </p>
-            <p>
-              我相信最好的產品經理是能在商業價值與用戶體驗之間找到平衡的人。技術背景讓我能夠準確評估需求的技術成本，數據思維讓我能夠用
-              A/B 測試驗證假設，而用戶洞察則讓我始終聚焦於解決真實問題。
-            </p>
-          </div>
-        </div>
-        <div className="lg:pl-20">
-          <ul role="list">
-            <SocialLink href="#" icon={GitHubIcon}>
-              GitHub
-            </SocialLink>
-            <SocialLink href="#" icon={LinkedInIcon} className="mt-4">
-              LinkedIn
-            </SocialLink>
-            <SocialLink
-              href="mailto:jenson_loh@outlook.com"
-              icon={MailIcon}
-              className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
-            >
-              jenson_loh@outlook.com
-            </SocialLink>
-          </ul>
-        </div>
+        <h1 className="text-5xl font-bold tracking-tighter text-zinc-900 sm:text-7xl dark:text-zinc-100 font-display max-w-5xl leading-[0.85] uppercase">
+          I’m Jenson Loh.<br />
+          I live in Taipei,<br />
+          <span className="text-zinc-400 dark:text-zinc-600">designing the future.</span>
+        </h1>
       </div>
+
+      <SectionLine className="mb-16" />
+
+      <SwissGrid columns={12} className="items-start gap-y-12 lg:gap-y-0">
+
+        {/* Left Column: Portrait & Technical Data */}
+        <SwissGridItem colSpan={5} className="lg:col-span-4 col-span-12 relative">
+          <FadeIn>
+            <div className="relative group">
+              <div className="absolute -inset-4 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <Crosshair className="absolute -top-1 -left-1 hidden lg:block text-zinc-300" />
+              <Crosshair className="absolute -bottom-1 -right-1 hidden lg:block text-zinc-300" />
+
+              <Image
+                src={portraitImage}
+                alt=""
+                sizes="(min-width: 1024px) 32rem, 20rem"
+                className="aspect-[3/4] w-full rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800 grayscale hover:grayscale-0 transition-all duration-700 rotate-2 group-hover:rotate-0"
+              />
+
+              <div className="mt-4 flex justify-between text-xs font-mono text-zinc-400">
+                <span>IMG_001.JPG</span>
+                <span>TAIPEI, TW</span>
+              </div>
+            </div>
+
+            <div className="mt-12 hidden lg:block">
+              <SwissLabel className="mb-6 block border-b border-zinc-100 dark:border-zinc-800 pb-2">Connect</SwissLabel>
+              <div className="space-y-2">
+                <SocialLink href="#" icon={XIcon}>Follow on X</SocialLink>
+                <SocialLink href="#" icon={InstagramIcon}>Follow on Instagram</SocialLink>
+                <SocialLink href="#" icon={GitHubIcon}>Follow on GitHub</SocialLink>
+                <SocialLink href="#" icon={LinkedInIcon}>Follow on LinkedIn</SocialLink>
+                <SocialLink href="mailto:jenson_loh@outlook.com" icon={MailIcon}>
+                  jenson_loh@outlook.com
+                </SocialLink>
+              </div>
+            </div>
+          </FadeIn>
+        </SwissGridItem>
+
+        {/* Right Column: Editorial Content */}
+        <SwissGridItem colSpan={7} start={6} className="lg:col-span-7 lg:col-start-6 col-span-12">
+          <FadeInStagger>
+            <FadeIn>
+              <div className="text-xl font-medium text-zinc-900 dark:text-zinc-100 leading-relaxed mb-8 border-l-2 border-teal-500 pl-6 lg:pl-8">
+                I’ve loved making things for as long as I can remember, and wrote my
+                first program when I was 6 years old, just two weeks after my mom
+                brought home the brand new Macintosh LC 550 that I taught myself to
+                type on.
+              </div>
+            </FadeIn>
+
+            <FadeIn>
+              <div className="space-y-7 text-base text-zinc-600 dark:text-zinc-400 leading-relaxed font-serif lg:font-sans">
+                <p>
+                  The only thing I loved more than computers as a kid was space. When
+                  I was 8, I climbed my 40-foot oak tree specifically to read the
+                  book that The Time Warp Trio wrote about blasting off into space.
+                </p>
+                <p>
+                  Today, I’m the founder of Planetaria, where we’re working on
+                  civilian space suits and manned shuttle kits for the average
+                  eccentric billionaire.
+                </p>
+                <p>
+                  (This is a placeholder bio for display purposes.)
+                </p>
+              </div>
+            </FadeIn>
+
+            {/* Mobile Social Links */}
+            <div className="mt-12 lg:hidden">
+              <SwissLabel className="mb-6 block border-b border-zinc-100 dark:border-zinc-800 pb-2">Connect</SwissLabel>
+              <div className="space-y-2">
+                <SocialLink href="#" icon={XIcon}>X</SocialLink>
+                <SocialLink href="#" icon={InstagramIcon}>Instagram</SocialLink>
+                <SocialLink href="#" icon={GitHubIcon}>GitHub</SocialLink>
+                <SocialLink href="#" icon={LinkedInIcon}>LinkedIn</SocialLink>
+                <SocialLink href="mailto:jenson_loh@outlook.com" icon={MailIcon}>
+                  Email
+                </SocialLink>
+              </div>
+            </div>
+
+          </FadeInStagger>
+        </SwissGridItem>
+
+      </SwissGrid>
     </Container>
   )
 }

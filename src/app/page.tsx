@@ -5,6 +5,8 @@ import clsx from 'clsx'
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
+import { SwissGrid, SwissGridItem } from '@/components/SwissGrid'
+import { FadeIn, FadeInStagger } from '@/components/FadeIn'
 import {
   GitHubIcon,
   LinkedInIcon,
@@ -20,6 +22,7 @@ import image4 from '@/images/photos/image-4.jpg'
 import image5 from '@/images/photos/image-5.jpg'
 import { type ArticleWithSlug, getAllArticles } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
+import { Crosshair, PlusGridItem, SectionLine, SwissLabel } from '@/components/GeometricDecor'
 
 function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -110,8 +113,8 @@ function SocialLink({
 
 function ContactMe() {
   return (
-    <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-      <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+    <div className="p-0 lg:ml-6">
+      <h2 className="flex text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest">
         <MailIcon className="h-6 w-6 flex-none" />
         <span className="ml-3">聯絡我</span>
       </h2>
@@ -149,8 +152,8 @@ function Role({ role }: { role: Role }) {
 
   return (
     <li className="flex gap-4">
-      <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
-        <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
+      <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-none bg-zinc-50 dark:bg-zinc-800">
+        <Image src={role.logo} alt="" className="h-7 w-7 grayscale group-hover:grayscale-0 transition-all duration-300" unoptimized />
       </div>
       <dl className="flex flex-auto flex-wrap gap-x-2">
         <dt className="sr-only">Company</dt>
@@ -211,8 +214,8 @@ function Resume() {
   ]
 
   return (
-    <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-      <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+    <div className="p-0 lg:ml-6 mt-10 lg:mt-0">
+      <h2 className="flex text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest">
         <BriefcaseIcon className="h-6 w-6 flex-none" />
         <span className="ml-3">工作經歷</span>
       </h2>
@@ -221,7 +224,7 @@ function Resume() {
           <Role key={roleIndex} role={role} />
         ))}
       </ol>
-      <Button href="#" variant="secondary" className="group mt-6 w-full">
+      <Button href="#" variant="secondary" className="group mt-6 w-full rounded-none bg-transparent border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800">
         下載履歷
         <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
       </Button>
@@ -230,30 +233,27 @@ function Resume() {
 }
 
 function Photos() {
-  let rotations = ['rotate-2', '-rotate-2', 'rotate-2', 'rotate-2', '-rotate-2']
-
   return (
     <div className="mt-16 sm:mt-20">
-      <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
+      <SwissGrid className="-my-4 overflow-hidden py-4 sm:gap-8 gap-x-0" columns={5}>
         {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
           <div
             key={image.src}
             className={clsx(
-              'relative w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 sm:w-72 sm:rounded-2xl dark:bg-zinc-800',
-              rotations[imageIndex % rotations.length],
+              'relative aspect-9/10 w-full flex-none overflow-hidden bg-zinc-100 dark:bg-zinc-800',
+              'rounded-none',
+              imageIndex % 2 === 0 ? 'mt-8' : 'mt-0' // Asymmetrical vertical rhythm
             )}
           >
-            <div className="aspect-9/10">
-              <Image
-                src={image}
-                alt=""
-                sizes="(min-width: 640px) 18rem, 11rem"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            </div>
+            <Image
+              src={image}
+              alt=""
+              sizes="(min-width: 640px) 18rem, 11rem"
+              className="absolute inset-0 h-full w-full object-cover grayscale transition hover:grayscale-0"
+            />
           </div>
         ))}
-      </div>
+      </SwissGrid>
     </div>
   )
 }
@@ -262,50 +262,88 @@ export default async function Home() {
   let articles = (await getAllArticles()).slice(0, 4)
 
   return (
-    <>
-      <Container className="mt-9">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            產品經理、專案經理，用數據驅動增長的實踐者。
-          </h1>
-          <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            我是羅吉祥（Jenson），一位懂技術的產品經理。曾在小紅書主導分享增長策略，實現觸達率提升
-            45%；在喜馬拉雅從 0 到 1 建構商業化體系，付費轉化率提升
-            25%。我相信最好的產品經理是能在商業價值與用戶體驗之間找到平衡的人。
-          </p>
-          <div className="mt-6 flex gap-6">
-            <SocialLink
-              href="mailto:jenson_loh@outlook.com"
-              aria-label="Email"
-              icon={MailIcon}
-            />
-            <SocialLink
-              href="#"
-              aria-label="Follow on GitHub"
-              icon={GitHubIcon}
-            />
-            <SocialLink
-              href="#"
-              aria-label="Follow on LinkedIn"
-              icon={LinkedInIcon}
-            />
-          </div>
+    <FadeInStagger>
+      <Container className="mt-16 md:mt-24 relative">
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden -z-10 opacity-50">
+          <PlusGridItem className="top-10 left-10 hidden lg:block" />
+          <PlusGridItem className="top-10 right-10 hidden lg:block" />
+          <PlusGridItem className="bottom-10 left-10 hidden lg:block" />
         </div>
-      </Container>
-      <Photos />
-      <Container className="mt-24 md:mt-28">
-        <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-          <div className="flex flex-col gap-16">
-            {articles.map((article) => (
-              <Article key={article.slug} article={article} />
-            ))}
+
+        <FadeIn>
+          <div className="mb-8 pl-1">
+            <SwissLabel>Portfolio 2024 — Jenson Loh</SwissLabel>
           </div>
-          <div className="space-y-10 lg:pl-16 xl:pl-24">
-            <ContactMe />
-            <Resume />
-          </div>
-        </div>
+          <SectionLine className="mb-12" />
+
+          <SwissGrid columns={12} className="items-start">
+            <SwissGridItem colSpan={8} className="lg:col-span-8 md:col-span-12 col-span-12 relative">
+              <Crosshair className="absolute -top-14 -left-2 text-teal-500 hidden lg:block" />
+              <h1 className="text-6xl font-bold tracking-tighter text-zinc-900 sm:text-8xl dark:text-zinc-100 font-display leading-[0.85] uppercase">
+                Product<br />
+                Manager<span className="text-teal-500">.</span>
+              </h1>
+            </SwissGridItem>
+            <SwissGridItem colSpan={4} className="lg:col-span-4 md:col-span-12 col-span-12 mt-12 lg:mt-2">
+              <div className="lg:border-l border-zinc-200 dark:border-zinc-800 lg:pl-8 h-full">
+                <SwissLabel className="block mb-4">Introduction</SwissLabel>
+                <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed font-light">
+                  我是羅吉祥（Jenson），一位懂技術的產品經理。曾在小紅書主導分享增長策略，實現觸達率提升
+                  45%；在喜馬拉雅從 0 到 1 建構商業化體系，付費轉化率提升
+                  25%。
+                  <br /><br />
+                  我相信最好的產品經理是能在商業價值與用戶體驗之間找到平衡的人。
+                </p>
+                <div className="mt-10 flex gap-6">
+                  <SocialLink
+                    href="mailto:jenson_loh@outlook.com"
+                    aria-label="Email"
+                    icon={MailIcon}
+                  />
+                  <SocialLink
+                    href="#"
+                    aria-label="Follow on GitHub"
+                    icon={GitHubIcon}
+                  />
+                  <SocialLink
+                    href="#"
+                    aria-label="Follow on LinkedIn"
+                    icon={LinkedInIcon}
+                  />
+                </div>
+              </div>
+            </SwissGridItem>
+          </SwissGrid>
+        </FadeIn>
       </Container>
-    </>
+
+      <div className="relative">
+        <SectionLine className="absolute top-0 w-full" />
+        <Photos />
+      </div>
+
+      <Container className="mt-24 md:mt-32">
+        <SwissGrid columns={12}>
+          <SwissGridItem colSpan={7} className="lg:col-span-7 col-span-12 border-t border-zinc-200 dark:border-zinc-800 pt-10">
+            <h2 className="text-2xl font-bold mb-10 text-zinc-900 dark:text-white">最新文章</h2>
+            <div className="flex flex-col gap-16">
+              <FadeIn>
+                {articles.map((article) => (
+                  <Article key={article.slug} article={article} />
+                ))}
+              </FadeIn>
+            </div>
+          </SwissGridItem>
+
+          <SwissGridItem colSpan={4} start={9} className="lg:col-span-4 lg:col-start-9 col-span-12 mt-16 lg:mt-0 border-t border-zinc-200 dark:border-zinc-800 pt-10">
+            <FadeIn>
+              <ContactMe />
+              <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800 my-10 lg:ml-6" />
+              <Resume />
+            </FadeIn>
+          </SwissGridItem>
+        </SwissGrid>
+      </Container>
+    </FadeInStagger>
   )
 }
