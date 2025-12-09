@@ -4,12 +4,7 @@ import Link from 'next/link'
 import clsx from 'clsx'
 
 import { Container } from '@/components/Container'
-import {
-  GitHubIcon,
-  InstagramIcon,
-  LinkedInIcon,
-  XIcon,
-} from '@/components/SocialIcons'
+import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
 import portraitImage from '@/images/portrait.jpg'
 
 function SocialLink({
@@ -48,9 +43,9 @@ function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 }
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: '關於',
   description:
-    'I’m Spencer Sharp. I live in New York City, where I design the future.',
+    '我是羅吉祥（Jenson Loh），一位用數據驅動產品增長的產品經理。',
 }
 
 export default function About() {
@@ -69,58 +64,42 @@ export default function About() {
         </div>
         <div className="lg:order-first lg:row-span-2">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            I’m Spencer Sharp. I live in New York City, where I design the
-            future.
+            我是羅吉祥，一位用數據驅動產品增長的產品經理。
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
             <p>
-              I’ve loved making things for as long as I can remember, and wrote
-              my first program when I was 6 years old, just two weeks after my
-              mom brought home the brand new Macintosh LC 550 that I taught
-              myself to type on.
+              我畢業於上海理工大學資訊工程學系，擁有紮實的技術背景。這段學習經歷讓我不僅能夠理解技術實現的複雜性，更能夠在產品設計時充分考慮技術可行性，成為真正能與工程師深度對話的產品經理。
             </p>
             <p>
-              The only thing I loved more than computers as a kid was space.
-              When I was 8, I climbed the 40-foot oak tree at the back of our
-              yard while wearing my older sister’s motorcycle helmet, counted
-              down from three, and jumped — hoping the tree was tall enough that
-              with just a bit of momentum I’d be able to get to orbit.
+              我的產品經理之旅始於喜馬拉雅，在那裡我從 0 到 1
+              建構了商業化體系，涵蓋會員訂閱、內容付費和原生廣告三大模組。透過精細的用戶分層和付費轉化漏斗優化，成功將付費轉化率提升
+              25%、用戶留存率提升 15%。
             </p>
             <p>
-              I spent the next few summers indoors working on a rocket design,
-              while I recovered from the multiple surgeries it took to fix my
-              badly broken legs. It took nine iterations, but when I was 15 I
-              sent my dad’s Blackberry into orbit and was able to transmit a
-              photo back down to our family computer from space.
+              之後在小紅書擔任中台產品經理，主導建構 User–Content–Data
+              全鏈路追蹤體系，並制定社交分享增長策略。透過個性化分享卡片、智能推薦語和分享激勵機制，實現分享觸達率提升
+              45%、新客轉化率提升 20%。
             </p>
             <p>
-              Today, I’m the founder of Planetaria, where we’re working on
-              civilian space suits and manned shuttle kits you can assemble at
-              home so that the next generation of kids really <em>can</em> make
-              it to orbit — from the comfort of their own backyards.
+              我相信最好的產品經理是能在商業價值與用戶體驗之間找到平衡的人。技術背景讓我能夠準確評估需求的技術成本，數據思維讓我能夠用
+              A/B 測試驗證假設，而用戶洞察則讓我始終聚焦於解決真實問題。
             </p>
           </div>
         </div>
         <div className="lg:pl-20">
           <ul role="list">
-            <SocialLink href="#" icon={XIcon}>
-              Follow on X
-            </SocialLink>
-            <SocialLink href="#" icon={InstagramIcon} className="mt-4">
-              Follow on Instagram
-            </SocialLink>
-            <SocialLink href="#" icon={GitHubIcon} className="mt-4">
-              Follow on GitHub
+            <SocialLink href="#" icon={GitHubIcon}>
+              GitHub
             </SocialLink>
             <SocialLink href="#" icon={LinkedInIcon} className="mt-4">
-              Follow on LinkedIn
+              LinkedIn
             </SocialLink>
             <SocialLink
-              href="mailto:spencer@planetaria.tech"
+              href="mailto:jenson_loh@outlook.com"
               icon={MailIcon}
               className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
             >
-              spencer@planetaria.tech
+              jenson_loh@outlook.com
             </SocialLink>
           </ul>
         </div>

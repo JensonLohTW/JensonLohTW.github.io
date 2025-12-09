@@ -3,47 +3,34 @@ import Image from 'next/image'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import logoAnimaginary from '@/images/logos/animaginary.svg'
-import logoCosmos from '@/images/logos/cosmos.svg'
-import logoHelioStream from '@/images/logos/helio-stream.svg'
-import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
-import logoPlanetaria from '@/images/logos/planetaria.svg'
+import logoXiaohongshu from '@/images/logos/xiaohongshu-project.svg'
+import logoXimalaya from '@/images/logos/ximalaya-project.svg'
+import logoOfficeStar from '@/images/logos/officestar-project.svg'
 
 const projects = [
   {
-    name: 'Planetaria',
+    name: '小紅書數據中台',
     description:
-      'Creating technology to empower civilians to explore space on their own terms.',
-    link: { href: 'http://planetaria.tech', label: 'planetaria.tech' },
-    logo: logoPlanetaria,
+      '主導建構 User–Content–Data 全鏈路追蹤體系，制定社交分享增長策略。實現分享觸達率提升 45%、新客轉化率提升 20%、分享成功率提升至失敗率 < 2%。',
+    link: { href: '#', label: '產品成果' },
+    logo: logoXiaohongshu,
+    metrics: ['觸達率 +45%', '轉化率 +20%', '失敗率 <2%'],
   },
   {
-    name: 'Animaginary',
+    name: '喜馬拉雅商業化模組',
     description:
-      'High performance web animation library, hand-written in optimized WASM.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoAnimaginary,
+      '從 0 到 1 建構商業化體系，涵蓋會員訂閱、內容付費、原生廣告三大模組。設計限時付費、內容試聽等付費轉化功能，建立需求池管理與敏捷開發流程。',
+    link: { href: '#', label: '產品成果' },
+    logo: logoXimalaya,
+    metrics: ['轉化率 +25%', '留存率 +15%', 'CTR +27%'],
   },
   {
-    name: 'HelioStream',
+    name: 'Office Star 數位化專案',
     description:
-      'Real-time video streaming library, optimized for interstellar transmission.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoHelioStream,
-  },
-  {
-    name: 'cosmOS',
-    description:
-      'The operating system that powers our Planetaria space shuttles.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoCosmos,
-  },
-  {
-    name: 'OpenShuttle',
-    description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoOpenShuttle,
+      '主導服飾集團數位轉型，開發 Python + Selenium 自動化標案爬蟲、Spring Boot + Vue 電商平台與 ERP 系統。打通跨部門數據 Pipeline，上線 5+ 業務模組。',
+    link: { href: '#', label: '產品成果' },
+    logo: logoOfficeStar,
+    metrics: ['100% 自動化', '效率 +40%', '5+ 模組'],
   },
 ]
 
@@ -59,15 +46,15 @@ function LinkIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 }
 
 export const metadata: Metadata = {
-  title: 'Projects',
-  description: 'Things I’ve made trying to put my dent in the universe.',
+  title: '專案',
+  description: '我主導的產品專案，用數據驅動增長的實踐案例。',
 }
 
 export default function Projects() {
   return (
     <SimpleLayout
-      title="Things I’ve made trying to put my dent in the universe."
-      intro="I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved."
+      title="我主導的產品專案"
+      intro="這些是我在產品經理生涯中主導的核心專案。每個專案都是從用戶需求出發，透過數據分析和迭代優化，最終實現顯著的業務增長。"
     >
       <ul
         role="list"
@@ -87,6 +74,16 @@ export default function Projects() {
               <Card.Link href={project.link.href}>{project.name}</Card.Link>
             </h2>
             <Card.Description>{project.description}</Card.Description>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {project.metrics.map((metric) => (
+                <span
+                  key={metric}
+                  className="inline-flex items-center rounded-full bg-teal-50 px-2 py-1 text-xs font-medium text-teal-700 ring-1 ring-teal-600/20 ring-inset dark:bg-teal-400/10 dark:text-teal-400 dark:ring-teal-400/20"
+                >
+                  {metric}
+                </span>
+              ))}
+            </div>
             <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-teal-500 dark:text-zinc-200">
               <LinkIcon className="h-6 w-6 flex-none" />
               <span className="ml-2">{project.link.label}</span>

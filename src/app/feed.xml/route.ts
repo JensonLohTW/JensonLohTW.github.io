@@ -10,13 +10,13 @@ export async function GET(req: Request) {
   }
 
   let author = {
-    name: 'Spencer Sharp',
-    email: 'spencer@planetaria.tech',
+    name: 'Jenson Loh',
+    email: 'jenson_loh@outlook.com',
   }
 
   let feed = new Feed({
     title: author.name,
-    description: 'Your blog description',
+    description: '產品經理的技術思考與實踐分享',
     author,
     id: siteUrl,
     link: siteUrl,

@@ -7,14 +7,12 @@ import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 import {
   GitHubIcon,
-  InstagramIcon,
   LinkedInIcon,
-  XIcon,
 } from '@/components/SocialIcons'
-import logoAirbnb from '@/images/logos/airbnb.svg'
-import logoFacebook from '@/images/logos/facebook.svg'
-import logoPlanetaria from '@/images/logos/planetaria.svg'
-import logoStarbucks from '@/images/logos/starbucks.svg'
+import logoJiexi from '@/images/logos/jiexi.svg'
+import logoOfficeStar from '@/images/logos/officestar.svg'
+import logoXiaohongshu from '@/images/logos/xiaohongshu.svg'
+import logoXimalaya from '@/images/logos/ximalaya.svg'
 import image1 from '@/images/photos/image-1.jpg'
 import image2 from '@/images/photos/image-2.jpg'
 import image3 from '@/images/photos/image-3.jpg'
@@ -110,34 +108,25 @@ function SocialLink({
   )
 }
 
-function Newsletter() {
+function ContactMe() {
   return (
-    <form
-      action="/thank-you"
-      className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
-    >
+    <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
         <MailIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">Stay up to date</span>
+        <span className="ml-3">聯絡我</span>
       </h2>
       <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-        Get notified when I publish something new, and unsubscribe at any time.
+        歡迎交流產品、技術或任何有趣的想法。
       </p>
-      <div className="mt-6 flex items-center">
-        <span className="flex min-w-0 flex-auto p-px">
-          <input
-            type="email"
-            placeholder="Email address"
-            aria-label="Email address"
-            required
-            className="w-full appearance-none rounded-[calc(var(--radius-md)-1px)] bg-white px-3 py-[calc(--spacing(2)-1px)] shadow-md shadow-zinc-800/5 outline outline-zinc-900/10 placeholder:text-zinc-400 focus:ring-4 focus:ring-teal-500/10 focus:outline-teal-500 sm:text-sm dark:bg-zinc-700/15 dark:text-zinc-200 dark:outline-zinc-700 dark:placeholder:text-zinc-500 dark:focus:ring-teal-400/10 dark:focus:outline-teal-400"
-          />
-        </span>
-        <Button type="submit" className="ml-4 flex-none">
-          Join
-        </Button>
+      <div className="mt-6">
+        <a
+          href="mailto:jenson_loh@outlook.com"
+          className="flex items-center text-sm font-medium text-teal-500 hover:text-teal-600"
+        >
+          jenson_loh@outlook.com
+        </a>
       </div>
-    </form>
+    </div>
   )
 }
 
@@ -189,35 +178,35 @@ function Role({ role }: { role: Role }) {
 function Resume() {
   let resume: Array<Role> = [
     {
-      company: 'Planetaria',
-      title: 'CEO',
-      logo: logoPlanetaria,
-      start: '2019',
+      company: '杰悉科技',
+      title: '專案經理',
+      logo: logoJiexi,
+      start: '2025',
       end: {
-        label: 'Present',
+        label: '現在',
         dateTime: new Date().getFullYear().toString(),
       },
     },
     {
-      company: 'Airbnb',
-      title: 'Product Designer',
-      logo: logoAirbnb,
-      start: '2014',
-      end: '2019',
+      company: 'Office Star',
+      title: '全端工程師 / 產品主管',
+      logo: logoOfficeStar,
+      start: '2024',
+      end: '2025',
     },
     {
-      company: 'Facebook',
-      title: 'iOS Software Engineer',
-      logo: logoFacebook,
-      start: '2011',
-      end: '2014',
+      company: '小紅書',
+      title: '中台產品經理',
+      logo: logoXiaohongshu,
+      start: '2023',
+      end: '2024',
     },
     {
-      company: 'Starbucks',
-      title: 'Shift Supervisor',
-      logo: logoStarbucks,
-      start: '2008',
-      end: '2011',
+      company: '喜馬拉雅',
+      title: '商業化產品實習生',
+      logo: logoXimalaya,
+      start: '2022',
+      end: '2023',
     },
   ]
 
@@ -225,7 +214,7 @@ function Resume() {
     <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
         <BriefcaseIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">Work</span>
+        <span className="ml-3">工作經歷</span>
       </h2>
       <ol className="mt-6 space-y-4">
         {resume.map((role, roleIndex) => (
@@ -233,7 +222,7 @@ function Resume() {
         ))}
       </ol>
       <Button href="#" variant="secondary" className="group mt-6 w-full">
-        Download CV
+        下載履歷
         <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
       </Button>
     </div>
@@ -277,20 +266,18 @@ export default async function Home() {
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            Software designer, founder, and amateur astronaut.
+            產品經理、專案經理，用數據驅動增長的實踐者。
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Spencer, a software designer and entrepreneur based in New York
-            City. I’m the founder and CEO of Planetaria, where we develop
-            technologies that empower regular people to explore space on their
-            own terms.
+            我是羅吉祥（Jenson），一位懂技術的產品經理。曾在小紅書主導分享增長策略，實現觸達率提升
+            45%；在喜馬拉雅從 0 到 1 建構商業化體系，付費轉化率提升
+            25%。我相信最好的產品經理是能在商業價值與用戶體驗之間找到平衡的人。
           </p>
           <div className="mt-6 flex gap-6">
-            <SocialLink href="#" aria-label="Follow on X" icon={XIcon} />
             <SocialLink
-              href="#"
-              aria-label="Follow on Instagram"
-              icon={InstagramIcon}
+              href="mailto:jenson_loh@outlook.com"
+              aria-label="Email"
+              icon={MailIcon}
             />
             <SocialLink
               href="#"
@@ -314,7 +301,7 @@ export default async function Home() {
             ))}
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
-            <Newsletter />
+            <ContactMe />
             <Resume />
           </div>
         </div>

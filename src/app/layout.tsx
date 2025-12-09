@@ -7,12 +7,11 @@ import '@/styles/tailwind.css'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - Spencer Sharp',
-    default:
-      'Spencer Sharp - Software designer, founder, and amateur astronaut',
+    template: '%s - Jenson Loh',
+    default: 'Jenson Loh - 產品經理 / 專案經理',
   },
   description:
-    'I’m Spencer, a software designer and entrepreneur based in New York City. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms.',
+    '我是羅吉祥（Jenson Loh），一位懂技術的產品經理。曾任職於小紅書、喜馬拉雅等互聯網公司，專注於數據驅動的產品增長與商業化策略。',
   alternates: {
     types: {
       'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
@@ -26,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+    <html lang="zh-TW" className="h-full antialiased" suppressHydrationWarning>
       <body className="flex h-full bg-zinc-50 dark:bg-black">
         <Providers>
           <div className="flex w-full">
