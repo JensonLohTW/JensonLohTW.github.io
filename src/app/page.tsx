@@ -23,6 +23,7 @@ import image5 from '@/images/photos/image-5.jpg'
 import { type ArticleWithSlug, getAllArticles } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
 import { Crosshair, PlusGridItem, SectionLine, SwissLabel } from '@/components/GeometricDecor'
+import { FilmStrip } from '@/components/FilmStrip'
 
 function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -114,20 +115,27 @@ function SocialLink({
 function ContactMe() {
   return (
     <div className="p-0 lg:ml-6">
-      <h2 className="flex text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest">
-        <MailIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">聯絡我</span>
-      </h2>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-        歡迎交流產品、技術或任何有趣的想法。
-      </p>
-      <div className="mt-6">
-        <a
-          href="mailto:jenson_loh@outlook.com"
-          className="flex items-center text-sm font-medium text-teal-500 hover:text-teal-600"
-        >
-          jenson_loh@outlook.com
-        </a>
+      <div className="border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50 p-6 relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+          <MailIcon className="h-24 w-24 -mr-8 -mt-8" />
+        </div>
+
+        <h2 className="flex text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest mb-4">
+          <span className="w-1.5 h-1.5 bg-teal-500 rounded-full mr-2 animate-pulse"></span>
+          Communication
+        </h2>
+        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed z-10 relative">
+          Open for collaboration on product strategy, growth hacking, and technical architecture.
+        </p>
+        <div className="mt-6 relative z-10">
+          <div className="text-[10px] font-mono text-zinc-400 mb-1 uppercase tracking-wider">Email Protocol</div>
+          <a
+            href="mailto:jenson_loh@outlook.com"
+            className="flex items-center text-sm font-bold font-mono text-teal-600 dark:text-teal-400 hover:underline"
+          >
+            jenson_loh@outlook.com
+          </a>
+        </div>
       </div>
     </div>
   )
@@ -215,48 +223,54 @@ function Resume() {
 
   return (
     <div className="p-0 lg:ml-6 mt-10 lg:mt-0">
-      <h2 className="flex text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest">
-        <BriefcaseIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">工作經歷</span>
+      <h2 className="flex items-center text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-widest mb-6">
+        <BriefcaseIcon className="h-6 w-6 flex-none text-teal-500" />
+        <span className="ml-3">Career Log</span>
       </h2>
-      <ol className="mt-6 space-y-4">
-        {resume.map((role, roleIndex) => (
-          <Role key={roleIndex} role={role} />
-        ))}
-      </ol>
-      <Button href="#" variant="secondary" className="group mt-6 w-full rounded-none bg-transparent border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800">
-        下載履歷
-        <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
+
+      <div className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50">
+        <div className="grid grid-cols-12 gap-4 p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/50 text-[10px] font-mono uppercase tracking-wider text-zinc-400 font-medium">
+          <div className="col-span-4">Company</div>
+          <div className="col-span-5">Role</div>
+          <div className="col-span-3 text-right">Period</div>
+        </div>
+        <ol className="divide-y divide-zinc-100 dark:divide-zinc-800">
+          {resume.map((role, roleIndex) => {
+            let startLabel = typeof role.start === 'string' ? role.start : role.start.label
+            let startDate = typeof role.start === 'string' ? role.start : role.start.dateTime
+            let endLabel = typeof role.end === 'string' ? role.end : role.end.label
+            let endDate = typeof role.end === 'string' ? role.end : role.end.dateTime
+
+            return (
+              <li key={roleIndex} className="grid grid-cols-12 gap-4 p-4 items-center group hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
+                <div className="col-span-4 flex items-center gap-3">
+                  <div className="relative h-8 w-8 flex-none bg-white p-0.5 border border-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
+                    <Image src={role.logo} alt="" className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all" unoptimized />
+                  </div>
+                  <span className="text-sm font-medium text-zinc-900 dark:text-zinc-200 truncate">{role.company}</span>
+                </div>
+                <div className="col-span-5 flex items-center">
+                  <span className="text-xs text-zinc-500 dark:text-zinc-400 font-mono">{role.title}</span>
+                </div>
+                <div className="col-span-3 text-right flex items-center justify-end">
+                  <span className="text-[10px] font-mono text-zinc-400 group-hover:text-teal-500 transition-colors">
+                    <time dateTime={startDate}>{startLabel}</time> — <time dateTime={endDate}>{endLabel}</time>
+                  </span>
+                </div>
+              </li>
+            )
+          })}
+        </ol>
+      </div>
+
+      <Button href="#" variant="secondary" className="group mt-6 w-full rounded-none bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 hover:bg-zinc-700 dark:hover:bg-zinc-300 border-none py-3">
+        Download Full CV
+        <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50 ml-2" />
       </Button>
     </div>
   )
 }
 
-function Photos() {
-  return (
-    <div className="mt-16 sm:mt-20">
-      <SwissGrid className="-my-4 overflow-hidden py-4 sm:gap-8 gap-x-0" columns={5}>
-        {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
-          <div
-            key={image.src}
-            className={clsx(
-              'relative aspect-9/10 w-full flex-none overflow-hidden bg-zinc-100 dark:bg-zinc-800',
-              'rounded-none',
-              imageIndex % 2 === 0 ? 'mt-8' : 'mt-0' // Asymmetrical vertical rhythm
-            )}
-          >
-            <Image
-              src={image}
-              alt=""
-              sizes="(min-width: 640px) 18rem, 11rem"
-              className="absolute inset-0 h-full w-full object-cover grayscale transition hover:grayscale-0"
-            />
-          </div>
-        ))}
-      </SwissGrid>
-    </div>
-  )
-}
 
 export default async function Home() {
   let articles = (await getAllArticles()).slice(0, 4)
@@ -279,7 +293,11 @@ export default async function Home() {
           <SwissGrid columns={12} className="items-start">
             <SwissGridItem colSpan={8} className="lg:col-span-8 md:col-span-12 col-span-12 relative">
               <Crosshair className="absolute -top-14 -left-2 text-teal-500 hidden lg:block" />
-              <h1 className="text-6xl font-bold tracking-tighter text-zinc-900 sm:text-8xl dark:text-zinc-100 font-display leading-[0.85] uppercase">
+              <div className="absolute top-0 right-0 font-mono text-[10px] text-zinc-400 dark:text-zinc-600 tracking-widest hidden lg:block">
+                REF: 001<br />
+                P.M. v3.0
+              </div>
+              <h1 className="text-7xl font-bold tracking-tighter text-zinc-900 sm:text-9xl dark:text-zinc-100 font-display leading-[0.8] uppercase">
                 Product<br />
                 Manager<span className="text-teal-500">.</span>
               </h1>
@@ -317,10 +335,7 @@ export default async function Home() {
         </FadeIn>
       </Container>
 
-      <div className="relative">
-        <SectionLine className="absolute top-0 w-full" />
-        <Photos />
-      </div>
+      <FilmStrip originalImages={[image1, image2, image3, image4, image5]} />
 
       <Container className="mt-24 md:mt-32">
         <SwissGrid columns={12}>

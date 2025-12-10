@@ -45,4 +45,21 @@
     font-family: var(--font-sans);
     @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-black dark:text-zinc-100;
   }
+
+  ::selection {
+    @apply bg-teal-500/30 text-teal-900 dark:bg-teal-500/30 dark:text-teal-50;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-300 dark:bg-zinc-700 rounded-full hover:bg-zinc-400 dark:hover:bg-zinc-600 transition-colors;
+  }
 }

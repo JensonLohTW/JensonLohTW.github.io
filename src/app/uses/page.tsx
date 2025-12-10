@@ -40,8 +40,8 @@ function ProjectStatus({ status }: { status: 'prototype' | 'building' | 'researc
   }
 
   return (
-    <span className={clsx("inline-flex items-center px-2 py-1 text-[10px] font-mono font-bold uppercase tracking-widest border rounded-sm", styles[status])}>
-      <span className={clsx("w-1.5 h-1.5 rounded-full mr-2 animate-pulse",
+    <span className={clsx("inline-flex items-center px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-widest border rounded-none transition-colors duration-300", styles[status])}>
+      <span className={clsx("w-1.5 h-1.5 rounded-none mr-2 animate-pulse",
         status === 'prototype' ? 'bg-amber-500' :
           status === 'building' ? 'bg-teal-500' : 'bg-indigo-500'
       )} />
@@ -64,7 +64,7 @@ function ActiveProject({
   children: React.ReactNode
 }) {
   return (
-    <div className="group relative h-full flex flex-col bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 transition-all duration-500 hover:border-teal-500/50 dark:hover:border-teal-500/50 hover:shadow-lg hover:shadow-zinc-200/50 dark:hover:shadow-black/50">
+    <div className="group relative h-full flex flex-col bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 transition-all duration-300 hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-xl hover:shadow-zinc-200/50 dark:hover:shadow-black/50">
 
       {/* Tech Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-100 dark:border-zinc-800 group-hover:bg-zinc-50/50 dark:group-hover:bg-zinc-800/50 transition-colors">
